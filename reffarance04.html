@@ -1,0 +1,194 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Supporting Documents</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body {
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            min-height: 100vh;
+            font-family: 'Inter', sans-serif;
+            color: #e0e0e0;
+        }
+        .post-card {
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5), 0 0 10px rgba(99, 102, 241, 0.3);
+        }
+        .post-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.6), 0 0 15px rgba(99, 102, 241, 0.5);
+        }
+        .upload-btn {
+            position: relative;
+            overflow: hidden;
+        }
+        .upload-btn input {
+            position: absolute;
+            top: 0;
+            right: 0;
+            opacity: 0;
+            width: 100%;
+            height: 100%;
+            cursor: pointer;
+        }
+        .fade-in {
+            animation: fadeIn 0.6s ease-in;
+        }
+        @keyframes fadeIn {
+            0% { opacity: 0; transform: translateY(20px); }
+            100% { opacity: 1; transform: translateY(0); }
+        }
+        .post-image {
+            max-height: 400px;
+            object-fit: cover;
+            border-radius: 8px;
+            border: 1px solid rgba(99, 102, 241, 0.3);
+            transition: transform 0.3s ease;
+        }
+        .post-image:hover {
+            transform: scale(1.02);
+        }
+        .input-glow {
+            transition: box-shadow 0.3s ease;
+        }
+        .input-glow:focus {
+            box-shadow: 0 0 10px rgba(99, 102, 241, 0.5);
+        }
+        .btn-glow {
+            position: relative;
+            overflow: hidden;
+        }
+        .btn-glow::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            transition: 0.5s;
+        }
+        .btn-glow:hover::after {
+            left: 100%;
+        }
+    </style>
+</head>
+<body class="antialiased">
+    <div class="container mx-auto px-4 py-8 max-w-3xl">
+        <!-- Header -->
+        <header class="mb-8 text-center">
+            <h1 class="text-4xl font-bold text-white">Supporting Documents</h1>
+            <p class="text-gray-400 mt-2">Ability to devolop & maintain good working relations</p>
+        </header>
+
+        <!-- Post Input Section -->
+        <div class="bg-gray-900 p-6 rounded-lg shadow-lg mb-8 border border-gray-700">
+            <textarea id="postContent" class="w-full p-4 bg-gray-800 text-white border border-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 input-glow" rows="4" placeholder="Describe your photo..."></textarea>
+            <div class="mt-4 flex justify-between items-center">
+                <div class="upload-btn">
+                    <button class="bg-indigo-600 text-white px-4 py-2 rounded-lg hover:bg-indigo-700 transition btn-glow">Upload Photo</button>
+                    <input type="file" id="fileUpload" accept="image/*" />
+                </div>
+                <button id="postBtn" class="bg-purple-600 text-white px-6 py-2 rounded-lg hover:bg-purple-700 transition btn-glow">Post</button>
+            </div>
+        </div>
+
+        <!-- Posts Container -->
+        <div id="postsContainer" class="space-y-6"></div>
+    </div>
+
+    <script>
+        // Sample posts with placeholder images
+        const samplePosts = [
+            {
+                content: "🏓During my time at Sabaragamuwa University of Sri Lanka, I actively participated in volunteer programs where I had the privilege of working with the Sri Lankan Youth Table Tennis Team as part of their preparation for the Journey to Asian Games 2025. This experience involved close collaboration with athletes, coaches, and fellow university volunteers. On the first day of the program, we conducted a biomechanical analysis session to assess player movement efficiency and minimize injury risks. Additionally, I contributed to organizing and delivering a First Aid and Injury Prevention program, where we educated athletes on emergency response, taping techniques, and basic injury management. These activities required strong communication, teamwork, and the ability to build professional relationships with individuals from diverse backgrounds. This opportunity not only enhanced my technical and organizational skills but also demonstrated my ability to develop and maintain positive working relations in both academic and professional sports environments.🏓",
+                image: "images/workshop1.jpg",
+                date: new Date(Date.now() - 48*60*60*1000).toLocaleString()
+            },
+            {
+                content: "🏋️I was actively involved in organizing and conducting a Health Promotion Program at Balangoda Vidyaloka School, aimed at enhancing awareness among school students about maintaining a healthy lifestyle. This program focused on key topics such as personal hygiene, balanced nutrition, mental well-being, and the importance of physical activity. I worked collaboratively with fellow university students, school staff, and healthcare professionals to deliver engaging presentations, conduct interactive sessions, and provide practical demonstrations. This initiative not only allowed me to contribute meaningfully to the community but also improved my ability to communicate with diverse age groups, coordinate team efforts, and maintain positive relationships with both educational and health sector stakeholders.🏃",
+                image: "images/health_pramotion.jpg",
+                date: new Date(Date.now() - 49*60*60*1000).toLocaleString()
+            },
+
+            {
+                content: "🏓On the second day of the program, I actively participated in the Technical Analysis Program conducted for the Sri Lankan Youth Table Tennis Team. This session focused on analyzing each player's technique, match strategies, and performance patterns using video analysis tools and expert evaluation. I worked collaboratively with coaches, analysts, and fellow volunteers to assess technical movements, identify areas for improvement, and document findings for athlete development. This experience helped me strengthen my ability to work in a team setting, communicate effectively across different professional roles, and contribute meaningfully to high-performance sports environments.🏓",
+                image: "images/workshop2.jpg",
+                date: new Date(Date.now() - 48*60*60*1000).toLocaleString()
+            },
+            {
+                content: "As part of my industrial training program, I was engaged with B/Uduhawara Maha Vidyalaya, where I contributed as both a Sports Coach and a Sports Scientist. During this period, I was responsible for planning and conducting physical training sessions, developing sport-specific drills, and guiding students to improve their fitness levels and athletic skills. Additionally, I applied sports science principles to monitor performance, assess physical capabilities, and prevent injuries. I worked closely with school staff and students, maintaining professional communication and demonstrating leadership and initiative in every task. This internship significantly enhanced my ability to apply theoretical knowledge in a practical school environment, manage responsibilities independently, and support young athletes in their physical development.",
+                image: "images/duty_assume.jpg",
+                date: new Date(Date.now() - 48*60*60*1000).toLocaleString()
+            },
+             {
+                content: "🚴I took part in organizing and implementing an Aerobic Fitness Promotion Program at Karagasthalawa Maha Vidyalaya, aimed at encouraging students to adopt active lifestyles through structured aerobic exercises. During this program, I collaborated with fellow university volunteers, physical education teachers, and school administrators to plan age-appropriate sessions that combined fun, movement, and health education. We led students through rhythmic warm-ups, aerobic dance routines, and basic fitness drills while also educating them on the long-term benefits of regular exercise. This initiative strengthened my ability to work as part of a team, communicate effectively with school communities, and foster a supportive and energetic environment where health and fitness were promoted in a meaningful way.💪",
+                image: "images/fitrush_present.jpg",
+                date: new Date(Date.now() - 48*60*60*1000).toLocaleString()
+            },
+              {
+                content: "I independently conducted a Sports Analysis Program at B/Uduhawara Maha Vidyalaya as a volunteer initiative. This program was designed to assess the physical performance and technical skills of student-athletes through structured observation and basic scientific analysis. I recorded training activities, analyzed movements and posture, and provided performance-based recommendations to both students and teachers. The aim was to introduce evidence-based insights into school sports and promote performance enhancement while minimizing injury risk. This self-initiated project reflects my passion for sports science and my ability to plan and execute development-oriented activities while maintaining strong working relationships with school staff and students.",
+                image: "",
+                date: new Date(Date.now() - 48*60*60*1000).toLocaleString()
+            }
+        ];
+
+        // Function to create a post element
+        function createPost(content, imageSrc, date) {
+            const postDiv = document.createElement('div');
+            postDiv.className = 'post-card bg-gray-900 p-6 rounded-lg shadow-lg fade-in border border-gray-700';
+            postDiv.innerHTML = `
+                <div class="flex items-center mb-4">
+                    <div class="w-10 h-10 bg-indigo-600 rounded-full flex items-center justify-center text-white font-bold">U</div>
+                    <div class="ml-3">
+                        <p class="font-semibold text-white">You</p>
+                        <p class="text-sm text-gray-400">${date}</p>
+                    </div>
+                </div>
+                <p class="text-gray-200 mb-4">${content || 'No description provided'}</p>
+                ${imageSrc ? `<img src="${imageSrc}" alt="Uploaded photo" class="post-image w-full" />` : ''}
+            `;
+            return postDiv;
+        }
+
+        // Load sample posts
+        const postsContainer = document.getElementById('postsContainer');
+        samplePosts.forEach(post => {
+            postsContainer.appendChild(createPost(post.content, post.image, post.date));
+        });
+
+        // Handle photo upload and post creation
+        document.getElementById('postBtn').addEventListener('click', () => {
+            const content = document.getElementById('postContent').value.trim();
+            const fileInput = document.getElementById('fileUpload');
+            const file = fileInput.files[0];
+
+            if (!content && !file) {
+                alert('Please add a description or a photo to post.');
+                return;
+            }
+
+            // Create post element
+            const imageSrc = file ? URL.createObjectURL(file) : '';
+            const postDiv = createPost(content, imageSrc, new Date().toLocaleString());
+
+            // Append post to container
+            postsContainer.prepend(postDiv);
+           
+            // Clear inputs
+            document.getElementById('postContent').value = '';
+            fileInput.value = '';
+        });
+
+        // Preview file name on upload
+        document.getElementById('fileUpload').addEventListener('change', (e) => {
+            const fileName = e.target.files[0]?.name || 'No file selected';
+            alert(`Selected photo: ${fileName}`);
+        });
+    </script>
+</body>
+</html>

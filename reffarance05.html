@@ -1,0 +1,204 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Supporting Documents</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body {
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            min-height: 100vh;
+            font-family: 'Inter', sans-serif;
+            color: #e0e0e0;
+        }
+        .post-card {
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5), 0 0 10px rgba(99, 102, 241, 0.3);
+        }
+        .post-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.6), 0 0 15px rgba(99, 102, 241, 0.5);
+        }
+        .upload-btn {
+            position: relative;
+            overflow: hidden;
+        }
+        .upload-btn input {
+            position: absolute;
+            top: 0;
+            right: 0;
+            opacity: 0;
+            width: 100%;
+            height: 100%;
+            cursor: pointer;
+        }
+        .fade-in {
+            animation: fadeIn 0.6s ease-in;
+        }
+        @keyframes fadeIn {
+            0% { opacity: 0; transform: translateY(20px); }
+            100% { opacity: 1; transform: translateY(0); }
+        }
+        .post-image {
+            max-height: 400px;
+            object-fit: cover;
+            border-radius: 8px;
+            border: 1px solid rgba(99, 102, 241, 0.3);
+            transition: transform 0.3s ease;
+        }
+        .post-image:hover {
+            transform: scale(1.02);
+        }
+        .input-glow {
+            transition: box-shadow 0.3s ease;
+        }
+        .input-glow:focus {
+            box-shadow: 0 0 10px rgba(99, 102, 241, 0.5);
+        }
+        .btn-glow {
+            position: relative;
+            overflow: hidden;
+        }
+        .btn-glow::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            transition: 0.5s;
+        }
+        .btn-glow:hover::after {
+            left: 100%;
+        }
+    </style>
+</head>
+<body class="antialiased">
+    <div class="container mx-auto px-4 py-8 max-w-3xl">
+        <!-- Header -->
+        <header class="mb-8 text-center">
+            <h1 class="text-4xl font-bold text-white">Supporting Documents</h1>
+            <p class="text-gray-400 mt-2">Ability to think clearly & arrive at logical conclutons</p>
+        </header>
+
+        <!-- Post Input Section -->
+        <div class="bg-gray-900 p-6 rounded-lg shadow-lg mb-8 border border-gray-700">
+            <textarea id="postContent" class="w-full p-4 bg-gray-800 text-white border border-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 input-glow" rows="4" placeholder="Describe your photo..."></textarea>
+            <div class="mt-4 flex justify-between items-center">
+                <div class="upload-btn">
+                    <button class="bg-indigo-600 text-white px-4 py-2 rounded-lg hover:bg-indigo-700 transition btn-glow">Upload Photo</button>
+                    <input type="file" id="fileUpload" accept="image/*" />
+                </div>
+                <button id="postBtn" class="bg-purple-600 text-white px-6 py-2 rounded-lg hover:bg-purple-700 transition btn-glow">Post</button>
+            </div>
+        </div>
+
+        <!-- Posts Container -->
+        <div id="postsContainer" class="space-y-6"></div>
+    </div>
+
+    <script>
+        // Sample posts with placeholder images
+        const samplePosts = [
+            {
+                content: "I developed a mobile application called Statistical Calculator, designed to perform a range of statistical computations with ease and accuracy. The app allows users to calculate essential statistical measures such as mean, median, mode, standard deviation, and variance for both grouped and ungrouped data sets. With a clean and user-friendly interface, it aims to assist students, teachers, and professionals in solving statistical problems quickly on the go. I was responsible for the entire development process, including designing the interface, implementing the logic, and testing the application to ensure smooth performance. This project highlights my skills in mobile application development, problem-solving, and creating practical tools that serve real-world needs.",
+                image: "images/stat.png",
+                date: new Date(Date.now() - 48*60*60*1000).toLocaleString()
+            },
+            {
+                content: "I designed and developed a Sports Center Management System for Sabaragamuwa University to streamline the management of sports facilities, athlete records, and event scheduling. This system was created to support administrative staff in efficiently handling equipment inventory, user registrations, booking of facilities, and tracking student participation in sports activities. It features a secure login system, role-based access for different user types (such as students, coaches, and administrators), and a dashboard for real-time monitoring. By automating many manual tasks, the system significantly improved operational efficiency and data accuracy. This project demonstrates my ability to build tailored software solutions that address specific institutional needs and enhance overall management processes.",
+                image: "images/sport unit.png",
+                date: new Date(Date.now() - 49*60*60*1000).toLocaleString()
+            },
+
+            {
+                content: "I developed a GPA Calculator Application aimed at helping university students easily calculate their Grade Point Average (GPA) and Cumulative GPA (CGPA) based on course grades and credit values. The application allows users to input subjects, assign corresponding grades and credit hours, and instantly view their calculated GPA. It features a simple, intuitive interface and ensures accurate, real-time results. The app was built to reduce the time and effort students spend on manual GPA calculations while minimizing errors. Through this project, I demonstrated my skills in developing practical academic tools, user-friendly interface design, and implementing reliable backend logic for real-world applications.",
+                image: "images/gpacal.png",
+                date: new Date(Date.now() - 48*60*60*1000).toLocaleString()
+            },
+            {
+                content: "I developed a Learning Management System (LMS) to facilitate the management and delivery of educational content in an organized, accessible, and interactive manner. The system supports key features such as course creation, student enrollment, assignment uploads, grading, announcements, and discussion forums. Designed with both instructors and students in mind, it includes role-based access, a clean dashboard, and automated notifications to enhance the teaching and learning experience. This project allowed me to apply my skills in full-stack development, database management, and user-centered design to build a comprehensive educational platform tailored to academic institutions or training environments.",
+                image: "images/lms.png",
+                date: new Date(Date.now() - 48*60*60*1000).toLocaleString()
+            },
+             {
+                content: "I developed a Center of Gravity (CG) Analysis Program using Python to calculate and visualize the center of gravity for various mechanical and structural systems. The program allows users to input different mass components and their coordinates, then computes the overall CG based on standard engineering formulas. It also provides a visual representation using plotting libraries to help users better understand mass distribution. This project demonstrates my ability to apply core programming concepts to solve engineering problems, as well as my skills in Python, mathematical modeling, and data visualization.",
+                image: "images/cganalysis.png",
+                date: new Date(Date.now() - 48*60*60*1000).toLocaleString()
+            },
+              {
+                content: "I created a Long Jump Analysis System using Python to assist in analyzing athlete performance based on video or data input. The system is designed to track and measure key metrics such as take-off angle, flight distance, speed, and body posture during the jump. Using computer vision techniques and relevant libraries like OpenCV and NumPy, the application can process video frames or motion data to extract performance insights. This tool is particularly useful for coaches and athletes to evaluate technique and improve training outcomes. Through this project, I combined my knowledge of sports science with Python programming, data processing, and basic biomechanics to build a practical solution for athletic performance analysis.",
+                image: "images/longjump.png",
+                date: new Date(Date.now() - 48*60*60*1000).toLocaleString()
+            },
+            {
+                content: "I developed a Cricket Bowling Analysis Program using Python to measure and analyze a bowler's arm angle and delivery speed. The system uses video input and computer vision techniques—primarily through libraries such as OpenCV and NumPy—to track the bowler's arm movement frame by frame. It calculates the release angle of the arm and estimates bowling speed based on frame timing and distance covered. This tool is especially useful for coaches and players aiming to improve technique, ensure consistency, and prevent injury. The project highlights my ability to apply programming and motion analysis techniques to solve real-world problems in sports performance and biomechanics.",
+                image: "images/cricketball.png",
+                date: new Date(Date.now() - 48*60*60*1000).toLocaleString()
+            },
+            {
+                content: "I designed and developed a personal portfolio website to showcase my projects, skills, and academic achievements in a professional and accessible format. The website features a clean, responsive layout with sections for my bio, project descriptions, certifications, contact information, and downloadable documents such as my resume and character certificate. Built using modern web technologies like HTML, CSS, JavaScript, and optionally frameworks such as React or Bootstrap, the site ensures smooth navigation across all devices. This project reflects my skills in front-end web development, UI/UX design, and my commitment to presenting my work in an organized and visually appealing way.",
+                image: "images/portfolio.png",
+                date: new Date(Date.now() - 48*60*60*1000).toLocaleString()
+            }
+        ];
+
+        // Function to create a post element
+        function createPost(content, imageSrc, date) {
+            const postDiv = document.createElement('div');
+            postDiv.className = 'post-card bg-gray-900 p-6 rounded-lg shadow-lg fade-in border border-gray-700';
+            postDiv.innerHTML = `
+                <div class="flex items-center mb-4">
+                    <div class="w-10 h-10 bg-indigo-600 rounded-full flex items-center justify-center text-white font-bold">U</div>
+                    <div class="ml-3">
+                        <p class="font-semibold text-white">You</p>
+                        <p class="text-sm text-gray-400">${date}</p>
+                    </div>
+                </div>
+                <p class="text-gray-200 mb-4">${content || 'No description provided'}</p>
+                ${imageSrc ? `<img src="${imageSrc}" alt="Uploaded photo" class="post-image w-full" />` : ''}
+            `;
+            return postDiv;
+        }
+
+        // Load sample posts
+        const postsContainer = document.getElementById('postsContainer');
+        samplePosts.forEach(post => {
+            postsContainer.appendChild(createPost(post.content, post.image, post.date));
+        });
+
+        // Handle photo upload and post creation
+        document.getElementById('postBtn').addEventListener('click', () => {
+            const content = document.getElementById('postContent').value.trim();
+            const fileInput = document.getElementById('fileUpload');
+            const file = fileInput.files[0];
+
+            if (!content && !file) {
+                alert('Please add a description or a photo to post.');
+                return;
+            }
+
+            // Create post element
+            const imageSrc = file ? URL.createObjectURL(file) : '';
+            const postDiv = createPost(content, imageSrc, new Date().toLocaleString());
+
+            // Append post to container
+            postsContainer.prepend(postDiv);
+           
+            // Clear inputs
+            document.getElementById('postContent').value = '';
+            fileInput.value = '';
+        });
+
+        // Preview file name on upload
+        document.getElementById('fileUpload').addEventListener('change', (e) => {
+            const fileName = e.target.files[0]?.name || 'No file selected';
+            alert(`Selected photo: ${fileName}`);
+        });
+    </script>
+</body>
+</html>

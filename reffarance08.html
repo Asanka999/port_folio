@@ -1,0 +1,175 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Supporting Documents</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body {
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            min-height: 100vh;
+            font-family: 'Inter', sans-serif;
+            color: #e0e0e0;
+        }
+        .post-card {
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5), 0 0 10px rgba(99, 102, 241, 0.3);
+        }
+        .post-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.6), 0 0 15px rgba(99, 102, 241, 0.5);
+        }
+        .upload-btn {
+            position: relative;
+            overflow: hidden;
+        }
+        .upload-btn input {
+            position: absolute;
+            top: 0;
+            right: 0;
+            opacity: 0;
+            width: 100%;
+            height: 100%;
+            cursor: pointer;
+        }
+        .fade-in {
+            animation: fadeIn 0.6s ease-in;
+        }
+        @keyframes fadeIn {
+            0% { opacity: 0; transform: translateY(20px); }
+            100% { opacity: 1; transform: translateY(0); }
+        }
+        .post-image {
+            max-height: 400px;
+            object-fit: cover;
+            border-radius: 8px;
+            border: 1px solid rgba(99, 102, 241, 0.3);
+            transition: transform 0.3s ease;
+        }
+        .post-image:hover {
+            transform: scale(1.02);
+        }
+        .input-glow {
+            transition: box-shadow 0.3s ease;
+        }
+        .input-glow:focus {
+            box-shadow: 0 0 10px rgba(99, 102, 241, 0.5);
+        }
+        .btn-glow {
+            position: relative;
+            overflow: hidden;
+        }
+        .btn-glow::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            transition: 0.5s;
+        }
+        .btn-glow:hover::after {
+            left: 100%;
+        }
+    </style>
+</head>
+<body class="antialiased">
+    <div class="container mx-auto px-4 py-8 max-w-3xl">
+        <!-- Header -->
+        <header class="mb-8 text-center">
+            <h1 class="text-4xl font-bold text-white">Supporting Documents</h1>
+            <p class="text-gray-400 mt-2">Ethical conduct</p>
+        </header>
+
+        <!-- Post Input Section -->
+        <div class="bg-gray-900 p-6 rounded-lg shadow-lg mb-8 border border-gray-700">
+            <textarea id="postContent" class="w-full p-4 bg-gray-800 text-white border border-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 input-glow" rows="4" placeholder="Describe your photo..."></textarea>
+            <div class="mt-4 flex justify-between items-center">
+                <div class="upload-btn">
+                    <button class="bg-indigo-600 text-white px-4 py-2 rounded-lg hover:bg-indigo-700 transition btn-glow">Upload Photo</button>
+                    <input type="file" id="fileUpload" accept="image/*" />
+                </div>
+                <button id="postBtn" class="bg-purple-600 text-white px-6 py-2 rounded-lg hover:bg-purple-700 transition btn-glow">Post</button>
+            </div>
+        </div>
+
+        <!-- Posts Container -->
+        <div id="postsContainer" class="space-y-6"></div>
+    </div>
+
+    <script>
+        // Sample posts with placeholder images
+        const samplePosts = [
+              {
+                content: "Received a Character Certificate from my school, recognizing consistent demonstration of integrity, discipline, and respect for others. This certificate reflects my commitment to ethical behavior, responsibility, and positive conduct within the school community.",
+                image: "images/caracter.jpg",
+                date: new Date(Date.now() - 24*60*60*1000).toLocaleString()
+            },
+           
+            {
+                content: "This certificate was issued by Sri Janananda Dhamma School, recognizing my consistent demonstration of good moral conduct, discipline, and respectful behavior throughout my time as a student. It reflects my adherence to ethical values and personal integrity, both within and outside the school environment.",
+                image: "images/dahampasal.jpg",
+                date: new Date(Date.now() - 24*60*60*1000).toLocaleString()
+            },
+           
+        ];
+
+        // Function to create a post element
+        function createPost(content, imageSrc, date) {
+            const postDiv = document.createElement('div');
+            postDiv.className = 'post-card bg-gray-900 p-6 rounded-lg shadow-lg fade-in border border-gray-700';
+            postDiv.innerHTML = `
+                <div class="flex items-center mb-4">
+                    <div class="w-10 h-10 bg-indigo-600 rounded-full flex items-center justify-center text-white font-bold">U</div>
+                    <div class="ml-3">
+                        <p class="font-semibold text-white">You</p>
+                        <p class="text-sm text-gray-400">${date}</p>
+                    </div>
+                </div>
+                <p class="text-gray-200 mb-4">${content || 'No description provided'}</p>
+                ${imageSrc ? `<img src="${imageSrc}" alt="Uploaded photo" class="post-image w-full" />` : ''}
+            `;
+            return postDiv;
+        }
+
+        // Load sample posts
+        const postsContainer = document.getElementById('postsContainer');
+        samplePosts.forEach(post => {
+            postsContainer.appendChild(createPost(post.content, post.image, post.date));
+        });
+
+        // Handle photo upload and post creation
+        document.getElementById('postBtn').addEventListener('click', () => {
+            const content = document.getElementById('postContent').value.trim();
+            const fileInput = document.getElementById('fileUpload');
+            const file = fileInput.files[0];
+
+            if (!content && !file) {
+                alert('Please add a description or a photo to post.');
+                return;
+            }
+
+            // Create post element
+            const imageSrc = file ? URL.createObjectURL(file) : '';
+            const postDiv = createPost(content, imageSrc, new Date().toLocaleString());
+
+            // Append post to container
+            postsContainer.prepend(postDiv);
+           
+            // Clear inputs
+            document.getElementById('postContent').value = '';
+            fileInput.value = '';
+        });
+
+        // Preview file name on upload
+        document.getElementById('fileUpload').addEventListener('change', (e) => {
+            const fileName = e.target.files[0]?.name || 'No file selected';
+            alert(`Selected photo: ${fileName}`);
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Professional Skills Assessment</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
+    <style>
+        .category-card {
+            transition: transform 0.3s ease, box-shadow 0.3s ease, background-color 0.3s ease;
+            background: linear-gradient(135deg, #1e3a8a, #3b82f6);
+            border: 1px solid #60a5fa;
+        }
+        .category-card:hover {
+            transform: scale(1.05) translateY(-5px);
+            box-shadow: 0 12px 24px rgba(0, 0, 0, 0.5);
+            background: linear-gradient(135deg, #2563eb, #1e40af);
+        }
+        .category-card:hover p {
+            color: #dbeafe;
+        }
+        body {
+            background: linear-gradient(to bottom, #0f172a, #1e3a8a);
+        }
+    </style>
+</head>
+<body class="font-sans min-h-screen text-white">
+    <div class="container mx-auto px-4 py-12">
+        <h1 class="text-5xl font-extrabold text-center text-blue-300 mb-12 animate__animated animate__fadeInDown">Professional Skills Assessment</h1>
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+            <a href="reffarance01.html" class="category-card rounded-xl p-6 text-center shadow-lg animate__animated animate__fadeInUp animate__delay-1s">
+                <h2 class="text-2xl font-semibold text-blue-100">Ability to Work in a Team</h2>
+                <p class="text-blue-200 mt-3">Collaborating effectively with colleagues to achieve common goals.</p>
+            </a>
+            <a href="reffarance02.html" class="category-card rounded-xl p-6 text-center shadow-lg animate__animated animate__fadeInUp animate__delay-2s">
+                <h2 class="text-2xl font-semibold text-blue-100">Ability to Plan & Execute Projects</h2>
+                <p class="text-blue-200 mt-3">Organizing tasks and delivering projects on time and within scope.</p>
+            </a>
+            <a href="reffarance03.html" class="category-card rounded-xl p-6 text-center shadow-lg animate__animated animate__fadeInUp animate__delay-3s">
+                <h2 class="text-2xl font-semibold text-blue-100">Ability to Act on Own Initiative</h2>
+                <p class="text-blue-200 mt-3">Taking proactive steps to address challenges and opportunities.</p>
+            </a>
+            <a href="reffarance04.html" class="category-card rounded-xl p-6 text-center shadow-lg animate__animated animate__fadeInUp animate__delay-4s">
+                <h2 class="text-2xl font-semibold text-blue-100">Ability to Develop & Maintain Good Working Relations</h2>
+                <p class="text-blue-200 mt-3">Building and sustaining positive professional relationships.</p>
+            </a>
+            <a href="reffarance05.html" class="category-card rounded-xl p-6 text-center shadow-lg animate__animated animate__fadeInUp animate__delay-5s">
+                <h2 class="text-2xl font-semibold text-blue-100">Ability to Think Clearly & Arrive at Logical Conclusions</h2>
+                <p class="text-blue-200 mt-3">Analyzing information to make sound, reasoned decisions.</p>
+            </a>
+            <a href="reffarance06.html" class="category-card rounded-xl p-6 text-center shadow-lg animate__animated animate__fadeInUp animate__delay-1s">
+                <h2 class="text-2xl font-semibold text-blue-100">Ability to Develop & Attain Professional Goals</h2>
+                <p class="text-blue-200 mt-3">Setting and achieving career objectives with focus and discipline.</p>
+            </a>
+            <a href="reffarance07.html" class="category-card rounded-xl p-6 text-center shadow-lg animate__animated animate__fadeInUp animate__delay-2s">
+                <h2 class="text-2xl font-semibold text-blue-100">Ability to Write Clearly & Convincingly</h2>
+                <p class="text-blue-200 mt-3">Communicating ideas effectively through written content.</p>
+            </a>
+            <a href="reffarance08.html" class="category-card rounded-xl p-6 text-center shadow-lg animate__animated animate__fadeInUp animate__delay-3s">
+                <h2 class="text-2xl font-semibold text-blue-100">Ethical Conduct</h2>
+                <p class="text-blue-200 mt-3">Upholding integrity and professionalism in all actions.</p>
+            </a>
+            <a href="reffarance09.html" class="category-card rounded-xl p-6 text-center shadow-lg animate__animated animate__fadeInUp animate__delay-4s">
+                <h2 class="text-2xl font-semibold text-blue-100">Ability to Plan & Execute Research</h2>
+                <p class="text-blue-200 mt-3">Conducting thorough and systematic investigations to gain insights.</p>
+            </a>
+            <a href="reffarance10.html" class="category-card rounded-xl p-6 text-center shadow-lg animate__animated animate__fadeInUp animate__delay-5s">
+                <h2 class="text-2xl font-semibold text-blue-100">Ability to Lead Others</h2>
+                <p class="text-blue-200 mt-3">Inspiring and guiding teams to achieve shared objectives.</p>
+            </a>
+        </div>
+    </div>
+    <script>
+        // Add click feedback and hover animation
+        document.querySelectorAll('.category-card').forEach(card => {
+            card.addEventListener('click', () => {
+                card.classList.add('animate__animated', 'animate__pulse');
+                setTimeout(() => card.classList.remove('animate__animated', 'animate__pulse'), 500);
+            });
+            card.addEventListener('mouseenter', () => {
+                card.classList.add('animate__animated', 'animate__tada');
+                setTimeout(() => card.classList.remove('animate__animated', 'animate__tada'), 1000);
+            });
+        });
+    </script>
+</body>
+</html>
+

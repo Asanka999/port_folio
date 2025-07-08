@@ -1,0 +1,183 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Supporting Documents</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body {
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            min-height: 100vh;
+            font-family: 'Inter', sans-serif;
+            color: #e0e0e0;
+        }
+        .post-card {
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5), 0 0 10px rgba(99, 102, 241, 0.3);
+        }
+        .post-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.6), 0 0 15px rgba(99, 102, 241, 0.5);
+        }
+        .upload-btn {
+            position: relative;
+            overflow: hidden;
+        }
+        .upload-btn input {
+            position: absolute;
+            top: 0;
+            right: 0;
+            opacity: 0;
+            width: 100%;
+            height: 100%;
+            cursor: pointer;
+        }
+        .fade-in {
+            animation: fadeIn 0.6s ease-in;
+        }
+        @keyframes fadeIn {
+            0% { opacity: 0; transform: translateY(20px); }
+            100% { opacity: 1; transform: translateY(0); }
+        }
+        .post-image {
+            max-height: 400px;
+            object-fit: cover;
+            border-radius: 8px;
+            border: 1px solid rgba(99, 102, 241, 0.3);
+            transition: transform 0.3s ease;
+        }
+        .post-image:hover {
+            transform: scale(1.02);
+        }
+        .input-glow {
+            transition: box-shadow 0.3s ease;
+        }
+        .input-glow:focus {
+            box-shadow: 0 0 10px rgba(99, 102, 241, 0.5);
+        }
+        .btn-glow {
+            position: relative;
+            overflow: hidden;
+        }
+        .btn-glow::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            transition: 0.5s;
+        }
+        .btn-glow:hover::after {
+            left: 100%;
+        }
+    </style>
+</head>
+<body class="antialiased">
+    <div class="container mx-auto px-4 py-8 max-w-3xl">
+        <!-- Header -->
+        <header class="mb-8 text-center">
+            <h1 class="text-4xl font-bold text-white">Supporting Documents</h1>
+            <p class="text-gray-400 mt-2">Ability to Work in a Team</p>
+        </header>
+
+        <!-- Post Input Section -->
+        <div class="bg-gray-900 p-6 rounded-lg shadow-lg mb-8 border border-gray-700">
+            <textarea id="postContent" class="w-full p-4 bg-gray-800 text-white border border-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 input-glow" rows="4" placeholder="Describe your photo..."></textarea>
+            <div class="mt-4 flex justify-between items-center">
+                <div class="upload-btn">
+                    <button class="bg-indigo-600 text-white px-4 py-2 rounded-lg hover:bg-indigo-700 transition btn-glow">Upload Photo</button>
+                    <input type="file" id="fileUpload" accept="image/*" />
+                </div>
+                <button id="postBtn" class="bg-purple-600 text-white px-6 py-2 rounded-lg hover:bg-purple-700 transition btn-glow">Post</button>
+            </div>
+        </div>
+
+        <!-- Posts Container -->
+        <div id="postsContainer" class="space-y-6"></div>
+    </div>
+
+    <script>
+        // Sample posts with placeholder images
+        const samplePosts = [
+            {
+                content: "🎯 I am an active member of my school kabaddi team, which has greatly enhanced my ability to work effectively in a team. Kabaddi is a sport that requires strong coordination, mutual trust, and clear communication among teammates. Through regular practice and competitive matches, I have developed a deep understanding of how to support others, adapt to group strategies, and stay focused under pressure. This experience has strengthened my teamwork skills and taught me the importance of working together to achieve shared goals.🗣️",
+                image: "images/school_team.jpg",
+                date: new Date(Date.now() - 24*60*60*1000).toLocaleString()
+            },
+            {
+                content: "🤼I am an active member of the Sabaragamuwa University of Sri Lanka (SUSL) kabaddi team. This experience has helped me develop strong teamwork skills, as kabaddi demands close coordination, clear communication, and mutual trust among team members. Through regular training sessions and competitive matches, I have learned to adapt to different roles, think strategically under pressure, and support my teammates effectively. Being part of the SUSL kabaddi team has strengthened my discipline, resilience, and ability to contribute positively to group success.🤼",
+                image: "images/susl_team.jpg",
+                date: new Date(Date.now() - 48*60*60*1000).toLocaleString()
+            },
+            {
+                content: "🌟 Nimesuru 2020 - I organizing commitee member (main organizer) in the Faculty of Applied Sciences Exhibition at Sabaragamuwa University of Sri Lanka, an event that showcased the innovative work, research, and talents of students and academic staff. This exhibition provided a valuable platform for me to engage with new ideas, share knowledge, and collaborate with peers from various scientific disciplines. It was a great opportunity to present practical applications of academic concepts, improve my communication and presentation skills, and gain inspiration from the creativity and dedication of others. Being part of this event strengthened my interest in applied science and my ability to contribute meaningfully to academic and public outreach activities.",
+                image: "images/nimesuru2.jpg",
+                date: new Date(Date.now() - 49*60*60*1000).toLocaleString()
+            },
+            {
+                content: "🌀 I organizing commitee member (group leader) Fit Rush - 2025 was a vibrant aerobic fitness promotion program held at Karagasthalawa Maha Vidyalaya, organized by the final-year students of the Faculty of Applied Science, Sabaragamuwa University of Sri Lanka. The event aimed to encourage school children to adopt healthy lifestyle habits through engaging aerobic workouts, fun fitness challenges, and interactive wellness sessions. Over 50 students actively participated, making the program both energetic and impactful. As the Event Coordinator, I played a key role in planning, organizing, and conducting the event. Through this experience, I gained valuable skills in leadership, public speaking, teamwork, and community engagement. Fit -Rush 2025 wasn’t just a fitness day - it was a movement to inspire youth to embrace energy, health, and happiness through physical activity.",
+                image: "images/fitrush_school_visit.jpg",
+                date: new Date(Date.now() - 24*60*60*1000).toLocaleString()
+            }
+        ];
+
+        // Function to create a post element
+        function createPost(content, imageSrc, date) {
+            const postDiv = document.createElement('div');
+            postDiv.className = 'post-card bg-gray-900 p-6 rounded-lg shadow-lg fade-in border border-gray-700';
+            postDiv.innerHTML = `
+                <div class="flex items-center mb-4">
+                    <div class="w-10 h-10 bg-indigo-600 rounded-full flex items-center justify-center text-white font-bold">U</div>
+                    <div class="ml-3">
+                        <p class="font-semibold text-white">You</p>
+                        <p class="text-sm text-gray-400">${date}</p>
+                    </div>
+                </div>
+                <p class="text-gray-200 mb-4">${content || 'No description provided'}</p>
+                ${imageSrc ? `<img src="${imageSrc}" alt="Uploaded photo" class="post-image w-full" />` : ''}
+            `;
+            return postDiv;
+        }
+
+        // Load sample posts
+        const postsContainer = document.getElementById('postsContainer');
+        samplePosts.forEach(post => {
+            postsContainer.appendChild(createPost(post.content, post.image, post.date));
+        });
+
+        // Handle photo upload and post creation
+        document.getElementById('postBtn').addEventListener('click', () => {
+            const content = document.getElementById('postContent').value.trim();
+            const fileInput = document.getElementById('fileUpload');
+            const file = fileInput.files[0];
+
+            if (!content && !file) {
+                alert('Please add a description or a photo to post.');
+                return;
+            }
+
+            // Create post element
+            const imageSrc = file ? URL.createObjectURL(file) : '';
+            const postDiv = createPost(content, imageSrc, new Date().toLocaleString());
+
+            // Append post to container
+            postsContainer.prepend(postDiv);
+           
+            // Clear inputs
+            document.getElementById('postContent').value = '';
+            fileInput.value = '';
+        });
+
+        // Preview file name on upload
+        document.getElementById('fileUpload').addEventListener('change', (e) => {
+            const fileName = e.target.files[0]?.name || 'No file selected';
+            alert(`Selected photo: ${fileName}`);
+        });
+    </script>
+</body>
+</html>
